@@ -1,0 +1,86 @@
+body * {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+        background-color: lightgray;
+}
+
+.page {
+    width: 850px;
+    background-color: #ffffff;
+    margin: auto;
+    padding: 50px;
+    padding-top: 35px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Softer heading box with subtext */
+h1 {
+    font-family: 'Open Sans', serif; 
+    font-weight: 700;
+    background-color: #b3d9ff; /* soft pastel blue */
+    color: #003366;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;          /* center align */
+    margin-bottom: 20px;
+}
+
+/* Subtext inside h1 */
+h1 .subtext {
+    display: block;
+    font-family: 'Open Sans', sans-serif; /* keep subtext modern */
+    font-size: 16px;
+    font-weight: 400;
+    color: #004080;
+    margin-top: 8px;
+}
+
+
+h2 {
+    background-color: #cce6ff; /* lighter pastel blue */
+    color: #004080;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+
+h3 {
+    background-color: #cce6ff; /* lighter pastel blue */
+    font-size: 30px;
+    color: #04294e;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+h4, h5, h6 {
+    color: #66b3ff;
+}
+
+.description h2,
+h1 {
+    margin-top: 0px;
+}
+
+.vis-container {
+    width: 100%;
+}
+
+.description-right {
+    padding-left: 20px;
+}
+
+.description-left {
+    padding-right: 20px;
+}
+
+.pure-g {
+    margin-bottom: 40px;
+}
+
+.small-font {
+    font-size: 14px;
+}

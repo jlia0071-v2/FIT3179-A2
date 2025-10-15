@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Average Temperature by State (2023)",
+  "width": "container",
+  "data": { "url": "data/state_weather_avg.csv" },
+  "layer": [
+    {
+      "mark": { "type": "rule", "strokeWidth": 10 },
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": { "field": "TemperatureMean", "order": "descending" },
+          "title": null
+        },
+        "color": {
+          "field": "TemperatureMean",
+          "type": "quantitative",
+          "scale": { "scheme": "reds" },
+          "legend": null
+        },
+        "x": { "field": "TemperatureMean", "type": "quantitative" }
+      }
+    },
+    {
+      "mark": { "type": "circle", "filled": true, "opacity": 0.95 },
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": { "field": "TemperatureMean", "order": "descending" }
+        },
+        "x": {
+          "field": "TemperatureMean",
+          "type": "quantitative",
+          "title": "Average Temperature (°C)"
+        },
+        "size": { "value": 200 },
+        "color": {
+          "field": "TemperatureMean",
+          "type": "quantitative",
+          "scale": { "scheme": "reds" },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "State", "type": "nominal" },
+          { "field": "TemperatureMean", "type": "quantitative", "format": ".2f", "title": "Avg Temp (°C)" },
+          { "field": "RainProportion", "type": "quantitative", "format": ".2f", "title": "Rain Proportion (%)" },
+          { "field": "Tourists", "type": "quantitative", "format": ".1f", "title": "Tourists (000s)" }
+        ]
+      }
+    }
+  ]
+}

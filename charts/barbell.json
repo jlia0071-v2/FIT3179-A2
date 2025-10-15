@@ -1,0 +1,68 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Projected Heat-related Deaths (per 100,000 population)",
+  "width": "container",
+  "data": { "url": "data/heat-deaths.csv" },
+  "transform": [
+    {
+      "fold": ["Year 2007", "Year 2020", "Year 2050"],
+      "as": ["Year", "DeathsRaw"]
+    },
+    {
+      "calculate": "toNumber(datum.DeathsRaw)",
+      "as": "Deaths"
+    },
+    {
+      "calculate": "toNumber(replace(datum.Year, 'Year ', ''))",
+      "as": "YearNum"
+    },
+    {
+      "filter": "datum.Year == 'Year 2007' || datum.Year == 'Year 2050'"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Location",
+      "type": "nominal",
+      "title": null,
+      "axis": {
+        "labelAngle": 0
+      },
+      "sort": {"field": "Deaths", "op": "max", "order": "descending"}
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "opacity": 0.6,
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": { "field": "Location", "type": "nominal" },
+        "y": { "field": "Deaths", "type": "quantitative", "title": "Heat-related deaths" },
+        "detail": { "field": "Location", "type": "nominal" }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "opacity": 1 },
+      "encoding": {
+        "x": { "field": "Location", "type": "nominal" },
+        "y": { "field": "Deaths", "type": "quantitative" },
+        "color": {
+          "field": "YearNum",
+          "type": "ordinal",
+          "scale": { "domain": [2007, 2050], "range": ["#377eb8", "#e41a1c"] },
+          "title": "Year"
+        },
+        "size": { "value": 200 },
+        "tooltip": [
+          { "field": "Location", "type": "nominal", "title": "Location" },
+          { "field": "YearNum", "type": "ordinal", "title": "Year" },
+          { "field": "Deaths", "type": "quantitative", "title": "Deaths", "format": "," }
+        ]
+      }
+    }
+  ]
+}

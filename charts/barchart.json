@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Annual Temperature Anomaly (difference from 1961-1990 average)",
+  "width": "container",
+  "data": { "url": "data/temp_change.csv" },
+  "transform": [
+    { "calculate": "toNumber(datum.Temperature)", "as": "TempNum" },
+    { "calculate": "toNumber(datum['11-year mean'])", "as": "Mean11" },
+    { "calculate": "toNumber(datum.Year)", "as": "YearNum" },
+    { "filter": "isFinite(datum.TempNum)" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar" },
+      "encoding": {
+        "x": {
+          "field": "YearNum",
+          "type": "quantitative",
+          "axis": {
+            "format": "d",
+            "title": "Year",
+            "tickCount": 12,
+            "tickMinStep": 10
+          },
+          "scale": { "domain": [1910, 2020]}
+        },
+        "y": { "field": "TempNum", "type": "quantitative", "title": "Temperature (°C)" },
+        "color": {
+          "condition": { "test": "datum.TempNum >= 0", "value": "#e41a1c" },
+          "value": "#377eb8"
+        },
+        "tooltip": [
+          { "field": "Year", "type": "nominal" },
+          { "field": "TempNum", "type": "quantitative", "title": "Temperature (°C)", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "isFinite(datum.Mean11)" }],
+      "mark": { "type": "line", "color": "black" },
+      "encoding": {
+        "x": { "field": "YearNum", "type": "quantitative", "scale": { "domain": [1910, 2020]} },
+        "y": { "field": "Mean11", "type": "quantitative" }
+      }
+    } 
+  ]
+  
+}

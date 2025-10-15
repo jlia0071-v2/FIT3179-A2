@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Victoria Annual Rainfall by Suburb (2023)",
+  "width": "container",
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-36, -38],
+    "rotate": [-145, 0, 0]
+  },
+  "data": {
+    "url": "data/vic2.json",
+    "format": { "type": "topojson", "feature": "SA2_2016_AUST" }
+  },
+
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "'Data not available in ' + datum.properties.SA2_NAME16",
+          "as": "note"
+        }
+      ],
+      "mark": { "type": "geoshape", "fill": "lightgray"},
+      "encoding": {
+        "tooltip": { "field": "note", "type": "nominal", "title": "Note" }
+      }
+    },
+    {
+      "transform": [
+        {
+          "lookup": "properties.SA2_NAME16",
+          "from": {
+            "data": { "url": "data/victoria_weather_annual_avg_2023.csv" },
+            "key": "OfficialNameSuburb",
+            "fields": ["RainSum"]
+          }
+        }
+      ],
+      
+      "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.5, "cursor": "pointer" },
+      "encoding": {
+        "color": {
+          "field": "RainSum",
+          "type": "quantitative",
+          "title": "Total Rainfall (mm)",
+          "scale": {
+            "type": "threshold",
+            "domain": [600, 800, 1000, 1200],
+            "range": ["#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5"]
+          }
+        },
+        "tooltip": [
+          { "field": "properties.SA2_NAME16", "type": "nominal", "title": "Suburb" },
+          {
+            "field": "RainSum",
+            "type": "quantitative",
+            "title": "Total Rainfall (mm)",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ]
+  }
+
